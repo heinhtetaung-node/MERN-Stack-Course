@@ -35,3 +35,15 @@ CRUD including relation tables
 4. run server http://localhost:5000
 
 
+Relational Database in nodejs mongodb using mongoose
+1. create model post
+2. create controller
+	In controller to get relational object just use populate
+	like following
+	Post.find().populate('author').exec((err, posts)=> {
+
+	});
+3. create routes
+4. test in postman 
+
+
