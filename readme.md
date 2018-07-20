@@ -166,5 +166,6 @@ Make sure add header
 
 That's all happy coding
 
+References from https://medium.freecodecamp.org/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52
 ----------------------------------------------------------------------------
 
