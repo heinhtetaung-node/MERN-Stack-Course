@@ -9,6 +9,11 @@ const routes = require('./routes/')
 
 const app = express()  // this is initialization of express app
 const router = express.Router()   // this is create router
+
+// add this line because intend to accept only json para and only return json
+router.use(bodyParser.urlencoded({ extended: false })); // for json return
+router.use(bodyParser.json());  // for json return 
+
 const url = process.env.MONGODB_URI || "mongodb://localhost:27017/mernstack"  // this is a kind of mongodb config, mernstack is db name
 
 /** connect to MongoDB datastore */
