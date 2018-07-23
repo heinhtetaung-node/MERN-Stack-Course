@@ -169,3 +169,61 @@ That's all happy coding
 References from https://medium.freecodecamp.org/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52
 ----------------------------------------------------------------------------
 
+
+
+4# Middleware in Nodejs Application (Ok today lets talk about middleware)
+
+Middleware is a kind of protection of our routes, a kind of checking something like login or other before redirect to other page,
+
+NOde js middleware is like this,
+1. Actually it's adding a function, in front of calling controller function
+router
+    .route('/users/')
+    .get(function(req, res, next){   // this is a middleware function to check auth
+        if(!req.headers){
+			return res.status(401).send({ auth: false, message: 'No token provided.' });
+		}
+		var token = req.headers['x-access-token'];
+		if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+		jwt.verify(token, config.secret, function(err, decoded) {
+			if (err){
+				return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });			
+			}		 
+			next();
+		});					        
+    },usercontroller.getAllUsers);    
+
+
+2. But we need to make common isn't it?
+To make common middleware
+make a new folder Middlewares and move code to right here and save as JwtAuthMiddleware.js
+module.exports = function (req, res, next) {    
+    if(!req.headers){
+		return res.status(401).send({ auth: false, message: 'No token provided.' });
+	}
+	var token = req.headers['x-access-token'];
+	if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+	jwt.verify(token, config.secret, function(err, decoded) {
+		if (err){
+			return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });			
+		}		 
+		next();
+	});					        
+};
+
+3. Now require this middleware and just change route like this
+var JwtAuthMiddleware = require("./Middlewares/JwtAuthMiddleware"),
+
+router
+    .route('/users/')
+    .get(JwtAuthMiddleware,usercontroller.getAllUsers);   
+
+That's all. Happy coding
+
+Reference from this
+https://expressjs.com/en/guide/writing-middleware.html
+https://stackoverflow.com/questions/41263787/setting-up-a-middleware-in-router-route-in-nodejs-express
+https://hackernoon.com/middleware-the-core-of-node-js-apps-ab01fee39200
+----------------------------------------------------------------------------
+
+

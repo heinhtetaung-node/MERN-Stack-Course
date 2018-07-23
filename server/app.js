@@ -20,6 +20,7 @@ const url = process.env.MONGODB_URI || "mongodb://localhost:27017/mernstack"  //
 try {
     mongoose.connect(url, {
         //useMongoClient: true
+        useNewUrlParser: true  // solve error DeprecationWarning: current URL string parser is deprecated, and will be removed in a future version. To use the new parser, pass option { useNewUrlParser: true } to MongoClient.connect.
     })    
 } catch (error) {
     console.log(error)
