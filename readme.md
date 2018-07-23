@@ -224,6 +224,7 @@ Reference from this
 https://expressjs.com/en/guide/writing-middleware.html
 https://stackoverflow.com/questions/41263787/setting-up-a-middleware-in-router-route-in-nodejs-express
 https://hackernoon.com/middleware-the-core-of-node-js-apps-ab01fee39200
+https://medium.com/@agoiabeladeyemi/a-simple-explanation-of-express-middleware-c68ea839f498
 ----------------------------------------------------------------------------
 
 
