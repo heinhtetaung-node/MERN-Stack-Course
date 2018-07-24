@@ -227,4 +227,77 @@ https://hackernoon.com/middleware-the-core-of-node-js-apps-ab01fee39200
 https://medium.com/@agoiabeladeyemi/a-simple-explanation-of-express-middleware-c68ea839f498
 ----------------------------------------------------------------------------
 
+5# Differenct between sql and nosql and one to many relation populate usage
+
+Ok today I will explain you about mongodb logic a little bit deep
+
+Compare with mysql, there may be a little bit different in thinking logic
+
+Let process in invoice saving
+
+In mysql, there are three tables may be
+1. invoice
+	- id
+	- total
+	- customer
+	- created 
+	- ..
+
+2. invoice_items
+	- id
+	- invoice_id (foreign key to invoice)
+	- odr_qty
+	- sell_price
+	- item_id (foreign key to item)
+
+3. Item 
+	- item_id
+	- price
+	- item_price
+	- item_desc
+	...
+
+Now saving in invoice
+First save to invoice, second save to invoice items using invoice id,
+Ok that's invoice logic of mysql
+
+
+But a little bit different in mongodb
+1. invoice
+	{
+		_id : 1212121
+		total : 2323,
+		customer : ..,
+		created : ..,
+		// here is a tricky part, there is no invoice_items table, no longer need. just insert invoice_items array to right here
+
+		invoice_items : [
+			{
+				item_id : type: mongoose.Schema.Types.ObjectId, (refreence to item table) ,
+				odr_qty : 12,
+				sell_price : 1000
+			}
+			// there may be many array
+		]
+	}
+
+2. item
+	{
+		item_id : ...,
+		price : ...,
+		item_price : ...,
+		item_desc : ...,
+	}
+
+Ok like this, this is different between mongodb and mysql.
+
+lets do with this comments and post now.
+
+POst have comments
+comments contain
+{
+	'author' : objectid reference to user table
+	'text' : ...
+}
+
 

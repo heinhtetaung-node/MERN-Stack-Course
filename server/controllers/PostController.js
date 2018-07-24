@@ -34,7 +34,9 @@ module.exports = {
 	getPost : (req, res, next) => {
 		const postid = req.params.id;
 		Post.findById(postid)  // the tricky part is here we need to get user object also in detail
-			.populate('author')  // can be done by using this
+			.populate('author').populate({path:'comments.author', select:'name'})   // here is little need to change to get comments also
+			// it also okay by doing populate('comments.author') directly. But I afraid to big json can harm performance
+			// that's why select only name from author.	Lets' run
 			.exec((err, post)=> {  
             if (err)
                 res.send(err)
