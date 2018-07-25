@@ -307,3 +307,51 @@ https://codeburst.io/build-simple-medium-com-on-node-js-and-react-js-a278c5192f4
 https://stackoverflow.com/questions/24096546/mongoose-populate-vs-object-nesting
 
 ----------------------------------------------------------------------------
+
+6# MERN Stack Series 6 - Async And Await Usage with post and tags pratical
+
+Async is a kind of waiting promise object in javascript instead of writing in done function.
+
+For basic example in db save, here is without using async
+const post = new Post(request);		
+const returndata = [];
+post.save((err, savedpost) => {
+	if(err){
+		returndata = err;
+	}else{
+		returndata = savedpost;
+	}
+});	
+
+
+In that case, If we 
+console.log(returndata);  // ???
+there is no return data just return []. because javascript works console.log first and then post.save is little take time and work second. That's why.
+But we can solve by using async.
+
+let returndata;
+try{
+	const post = new Post(request);		
+	returndata = await post.save(); // the tricky around here is await , is akind of waiting job till the end after done this line, go to next line.
+}catch(err){
+	res.send(err);
+}
+
+console.log(returndata); // {'id': .., 'name': ..}  // will output the savved array
+
+HOw clear and awesome.
+Lets see more digging through with real world project.
+
+
+Ok.. Our project is post project right. that's why we need tags isn't it.
+tags may be php, javascript, or like this. but tags need to be new table. but withoud duplicate right???
+
+Ok lets start
+
+Post and tags relationship is post have many tags 
+only save tags ids with array
+
+References
+http://blog.risingstack.com/mastering-async-await-in-nodejs?utm_source=mybridge&utm_medium=blog&utm_campaign=read_more
+
+----------------------------------------------------------------------------

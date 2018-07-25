@@ -1,4 +1,5 @@
 const Post = require('./../models/Post')
+const Tag = require('./../models/Tag')
 
 module.exports = {  
 	addPost : (req, res, next) => {		
@@ -34,7 +35,7 @@ module.exports = {
 	getPost : (req, res, next) => {
 		const postid = req.params.id;
 		Post.findById(postid)  // the tricky part is here we need to get user object also in detail
-			.populate('author').populate({path:'comments.author', select:'name'})   // here is little need to change to get comments also
+			.populate('tags').populate('author').populate({path:'comments.author', select:'name'})   // here is little need to change to get comments also
 			// it also okay by doing populate('comments.author') directly. But I afraid to big json can harm performance
 			// that's why select only name from author.	Lets' run
 			.exec((err, post)=> {  
@@ -58,5 +59,70 @@ module.exports = {
             next()            
         })
 
+	},
+
+	/* the post data is like this
+	{
+		"title" : "Post tag",
+		"description" : "desc",
+		"author" : "5b4ea96dae7e19175c2faee6",
+		"tags" : ["php", "java"]
+	}
+	*/
+	savePostAndTag : (req, res, next) => {	// without using async, how complex	
+		// first save tag
+		const request = req.body
+		const tags = request.tags.map(function(item, index){
+			return { title : item };  // this is loop and prepare tags array to save,
+		})
+		
+		Tag.insertMany(tags, {ordered:false}, function(err, savedtags){
+			if(err){ 
+				if(err.code=="11000"){  // 11000 is duplicate error code
+					Tag.find({ "title": { "$in" : request.tags }}).then(function(data){
+						const post = new Post(request);
+						post.tags = data.map(function(item, index){
+							return item._id
+						})
+						post.save((err, savedpost) => {
+							if(err){
+								res.send(err);
+							}else{
+								res.send({post: savedpost, tags:data});
+							}
+						})
+					})
+				}else{
+					res.send(err);
+				}
+			}else{
+				const post = new Post(request);
+				post.tags = savedtags.map(function(item, index){
+					return item._id
+				})
+				post.save((err, savedpost) => {
+					if(err){
+						res.send(err);
+					}else{
+						res.send({post: savedpost, tags:savedtags});
+					}
+				})
+			}
+		})		
+	},
+
+	/* Post data
+	{
+		"title" : "Post tag",
+		"description" : "desc",
+		"author" : "5b4ea96dae7e19175c2faee6",
+		"tags" : ["php", "java"]
+	}
+	*/
+	savePostAndTagAsync : async (req, res, next) => { // to use async, need to add async in ()
+		const request = req.body;
+		const post = new Post();		
+		const returnres = await post.savePostTags(request);
+		res.send(returnres);
 	}
 }

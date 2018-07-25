@@ -18,6 +18,10 @@ module.exports = (router) => {
         .route('/post') 
         .post(postcontroller.addPost)
 
+    router
+        .route('/posttag') 
+        .post(postcontroller.savePostAndTagAsync)
+
 
 	router
         .route('/posts/')  
