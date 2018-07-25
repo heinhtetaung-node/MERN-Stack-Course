@@ -304,3 +304,6 @@ comments contain
 References 
 https://github.com/azat-co/practicalnode/blob/master/chapter7/chapter7.md
 https://codeburst.io/build-simple-medium-com-on-node-js-and-react-js-a278c5192f47
+https://stackoverflow.com/questions/24096546/mongoose-populate-vs-object-nesting
+
+----------------------------------------------------------------------------
