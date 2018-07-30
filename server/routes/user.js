@@ -16,7 +16,7 @@ module.exports = (router) => {
      */
     router
         .route('/user')  // it means post localhost:5000/user/  goes to usercontroller addUser function
-        .post(JwtAuthMiddleware, usercontroller.addUser)
+        .post(usercontroller.addUser)
 
 
 	router
