@@ -355,3 +355,21 @@ References
 http://blog.risingstack.com/mastering-async-await-in-nodejs?utm_source=mybridge&utm_medium=blog&utm_campaign=read_more
 
 ----------------------------------------------------------------------------
+
+
+7# MERN Stack Series 6 - Node Js Application deploy to heroku
+
+1. create heroku account
+2. create app in heroku
+3. heroku config -a {appname}
+4. heroku git:remote -a {appname}
+5. in setting add config variable PORT 80 , 
+6. create new mongodb db in mlab.com (it's free)
+7. copy this url and paste in heroku setting config variable MONGODB_URI ???
+8. Add Procfile
+9. A little config in package.json
+10. app.js port a little bit need to change
+11. commit in local
+12. git push heroku master 
+13. check logs in heroku log
+14. Run
