@@ -361,6 +361,8 @@ http://blog.risingstack.com/mastering-async-await-in-nodejs?utm_source=mybridge&
 
 1. create heroku account
 2. create app in heroku
+I forgot in my video in order to use heroku command you need to download heroku installer https://cli-assets.heroku.com/heroku-x64.exe . And I highly recommend you should also read this https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up
+
 3. heroku config -a {appname}
 4. heroku git:remote -a {appname}
 5. in setting add config variable PORT 80 , 
