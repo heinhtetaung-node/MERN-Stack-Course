@@ -357,7 +357,7 @@ http://blog.risingstack.com/mastering-async-await-in-nodejs?utm_source=mybridge&
 ----------------------------------------------------------------------------
 
 
-7# MERN Stack Series 6 - Node Js Application deploy to heroku
+7# MERN Stack Series 7 - Node Js Application deploy to heroku
 
 1. create heroku account
 2. create app in heroku
