@@ -30,7 +30,13 @@ let port = 5000 || process.env.PORT   // this is our server port, now can run as
 
 routes(router) 	// we can use route by like this
 
-app.use(cors())	 // this is let our app can use from every domain, 
+
+// right here we need to allow domain
+const corsOptions = {
+	origin: 'http://localhost:3000',
+	credentials:true,
+}
+app.use(cors(corsOptions))	 // this is let our app can use from every domain, 
 app.use(bodyParser.json())
 
 app.use('/api', router)  // this is declare of routes by premix api...
