@@ -196,9 +196,9 @@ module.exports = {
 	// 		res.send(returnres);
 	// 	}
 	// }
-	deletePost : async(req,res,next) =>{
+	deletePost : (req,res,next) =>{
 		
-		await Post.findByIdAndRemove(req.params.id, (err, post) => {  
+		 Post.findByIdAndRemove(req.params.id, (err, post) => {  
 			// As always, handle any potential errors:
 			if (err) return res.status(500).send(err);
 			// We'll create a simple object to send back with a message and the id of the document that was removed
