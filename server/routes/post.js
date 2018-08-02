@@ -25,5 +25,9 @@ module.exports = (router) => {
 
 	router
         .route('/posts/')  
-        .get(postcontroller.getAllPost)    
+        .get(postcontroller.getAllPost) 
+        
+    router
+        .route('/postDelete/:id')  
+        .delete(postcontroller.deletePost) 
 }
