@@ -209,5 +209,15 @@ module.exports = {
 			};
 			res.send(response);
 		});
-	}
+	},
+	addComment: (req, res, next) => {
+        Post.findById(req.body.id).then((article)=> {
+            return article.comment({
+                author: req.body.author_id,
+                text: req.body.comment
+            }).then(() => {
+                return res.json({msg: "Done"})
+            })
+        }).catch(next)
+    }
 }

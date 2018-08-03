@@ -29,5 +29,9 @@ module.exports = (router) => {
         
     router
         .route('/postDelete/:id')  
-        .delete(postcontroller.deletePost) 
+        .delete(postcontroller.deletePost)
+    
+    router
+        .route('/addComment')  
+        .post(postcontroller.addComment)
 }

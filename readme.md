@@ -375,3 +375,27 @@ I forgot in my video in order to use heroku command you need to download heroku 
 12. git push heroku master 
 13. check logs in heroku log
 14. Run
+
+
+- Add Comment
+  1. add route in routes/post.js
+  	 router
+        .route('/addComment')  
+        .post(postcontroller.addComment)
+  2. add comment function in models/Post.js
+		PostSchema.methods.comment = function(c) {
+			this.comments.push(c)
+			return this.save()
+		}
+  3. add addcomment function in controllers/PostController.js
+		addComment: (req, res, next) => {
+        Post.findById(req.body.id).then((article)=> {
+            return article.comment({
+                author: req.body.author_id,
+                text: req.body.comment
+            }).then(() => {
+                return res.json({msg: "Done"})
+            })
+        }).catch(next)
+    },
+
