@@ -124,5 +124,23 @@ module.exports = {
 		const post = new Post();		
 		const returnres = await post.savePostTags(request);
 		res.send(returnres);
+	},
+
+	getAlltags : (req, res, next) => {
+		Tag.aggregate([
+            { "$project": {
+                "value": "$_id",
+                "label": "$title",
+            }}
+        ], function (err, tags) {
+            if (err)
+                res.send(err)
+            else if (!tags)
+                res.send(404)
+            else
+                res.send(tags)
+            next()            
+        });
+
 	}
 }
