@@ -1,5 +1,6 @@
 const Post = require('./../models/Post')
 const Tag = require('./../models/Tag')
+const url = require('url')
 
 module.exports = {  
 	addPost : (req, res, next) => {		
@@ -49,7 +50,12 @@ module.exports = {
         })
 	},
 	getAllPost : (req, res, next) => {
-		Post.find().populate('author').exec((err, posts)=> {
+		const filter = {};
+		const query = url.parse(req.url,true).query;
+		if(query.author){
+			filter.author = query.author;
+		}
+		Post.find(filter).populate('author').exec((err, posts)=> {
             if (err)
                 res.send(err)
             else if (!posts)
@@ -121,8 +127,14 @@ module.exports = {
 	*/
 	savePostAndTagAsync : async (req, res, next) => { // to use async, need to add async in ()
 		const request = req.body;
-		const post = new Post();		
-		const returnres = await post.savePostTags(request);
+		let returnres;
+		if(request._id){
+			const post = await Post.findById(request._id)
+			returnres = await post.savePostTags(request);		
+		}else{
+			const post = new Post();		
+			returnres = await post.savePostTags(request);
+		}		
 		res.send(returnres);
 	},
 
@@ -142,5 +154,15 @@ module.exports = {
             next()            
         });
 
+	},	
+	removepost : (req, res, next) => {
+		const request = req.body
+		Post.findByIdAndRemove(request._id, (err, post) => {
+			if(err){
+				res.send(err);
+			}else{
+				res.send({post: post, message:'deleted'});
+			}
+		});
 	}
 }
