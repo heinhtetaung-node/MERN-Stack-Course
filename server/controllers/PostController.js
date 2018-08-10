@@ -55,7 +55,22 @@ module.exports = {
 		if(query.author){
 			filter.author = query.author;
 		}
-		Post.find(filter).populate('author').exec((err, posts)=> {
+		if(query.keyword){
+			// NodeJs Mongoose find like Reference from
+			// https://stackoverflow.com/questions/9824010/mongoose-js-find-user-by-username-like-value
+			const keyword = new RegExp(query.keyword, 'i'); // it return /keyword/i            
+
+			// NodeJs Mongoose query find OR Reference From
+			// https://stackoverflow.com/questions/33898159/mongoose-where-query-with-or
+			filter.$or = [{title: keyword}, {description:keyword}]
+		}
+		if(query.tags){
+			// NodeJs Mongoose query find by Id Reference From
+			// https://stackoverflow.com/questions/5818303/how-do-i-perform-an-id-array-query-in-mongoose
+			const tagsarr = query.tags.split(",");
+			filter.tags = {$in : tagsarr};  // where tagsId IN(1,2,3)
+		}
+		Post.find(filter).populate('author').populate('tags').exec((err, posts)=> {
             if (err)
                 res.send(err)
             else if (!posts)
