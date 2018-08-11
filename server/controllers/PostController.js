@@ -49,6 +49,16 @@ module.exports = {
             next()            
         })
 	},
+	savecomment : (req, res, next) => {
+		const request = req.body;
+		const id = request.id;		
+		Post.findById(id).exec((err, post) => {
+			if(err){ res.send(err) }
+			post.comment({author: request.author, text: request.text}).then((savedcomment)=>{
+				return res.send({result: true, data : savedcomment})
+			})
+		});
+	},
 	getAllPost : (req, res, next) => {
 		const filter = {};
 		const query = url.parse(req.url,true).query;
@@ -70,7 +80,15 @@ module.exports = {
 			const tagsarr = query.tags.split(",");
 			filter.tags = {$in : tagsarr};  // where tagsId IN(1,2,3)
 		}
-		Post.find(filter).populate('author').populate('tags').exec((err, posts)=> {
+		var skip = 0;
+		var limit = 0;
+		if(query.page && query.limit){
+			page = parseInt(query.page);
+			limit = parseInt(query.limit);
+			skip = (page*limit)-limit;
+			limit = limit;
+		}
+		Post.find(filter).populate('author').populate('tags').sort({_id:-1}).skip(skip).limit(limit).exec((err, posts)=> {
             if (err)
                 res.send(err)
             else if (!posts)

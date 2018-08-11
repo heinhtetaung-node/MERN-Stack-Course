@@ -30,4 +30,8 @@ module.exports = (router) => {
     router
         .route('/removepost')
         .post(postcontroller.removepost)
+
+    router
+        .route('/savecomment')
+        .post(postcontroller.savecomment)
 }
