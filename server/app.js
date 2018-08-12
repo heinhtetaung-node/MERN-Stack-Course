@@ -33,7 +33,7 @@ routes(router) 	// we can use route by like this
 
 // right here we need to allow domain
 const corsOptions = {
-	origin: 'http://localhost:3000',
+	origin: ['http://localhost:3000','https://mern-stack-course-react.herokuapp.com'],
 	credentials:true,
 }
 app.use(cors(corsOptions))	 // this is let our app can use from every domain, 
