@@ -1,0 +1,32 @@
+{
+  "name": "Devplanet",
+  "version": "1.0.0",
+  "description": "Developer Guide",
+  "main": "server/index.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.4",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heinhtetaung-node/MERN-Stack-Course.git"
+  },
+  "keywords": [
+    "Devplanet"
+  ],
+  "author": "Devplanet Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heinhtetaung-node/MERN-Stack-Course/issues"
+  },
+  "homepage": "https://github.com/heinhtetaung-node/MERN-Stack-Course#readme"
+}

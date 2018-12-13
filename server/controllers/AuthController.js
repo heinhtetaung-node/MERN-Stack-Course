@@ -8,6 +8,7 @@ module.exports = {
 		User.findOne({ email: req.body.email }, function (err, user) {
 		    if (err) return res.status(500).send('Error on the server.');
 		    if (!user) return res.status(404).send('No user found.');
+		    if (!user.password) return res.status(404).send('No user found.');
 		    
 		    // after we found data with email, we crypt password and check with user pw
 		    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);		    
